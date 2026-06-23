@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Musik Booking System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="toast-container"></div>
+
+    <section id="login-view" class="view active">
+        <div class="login-card glass">
+            <div class="logo">
+                <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="neon-text"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+            </div>
+            <h2>Studio Musik<br><span>Booking System</span></h2>
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Masukkan username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Masukkan password" required>
+                </div>
+                <button type="submit" class="btn-primary">Login</button>
+                <p class="hint">Admin: admin / admin123<br>User: user / user123</p>
+            </form>
+        </div>
+    </section>
+
+    <section id="app-view" class="view">
+        <aside class="sidebar glass" id="sidebar">
+            <div class="sidebar-header">
+                <h3>Studio<span>Sync</span></h3>
+                <button id="close-sidebar" class="mobile-only">&times;</button>
+            </div>
+            <nav class="nav-links">
+                <a href="#" data-target="dashboard" class="active">Dashboard</a>
+                <a href="#" data-target="jadwal">Jadwal Studio</a>
+                <a href="#" data-target="booking">Booking</a>
+                <a href="#" data-target="riwayat">Riwayat Booking</a>
+                <a href="#" data-target="admin" id="nav-admin">Kelola Jadwal (Admin)</a>
+                <a href="#" id="logout-btn" class="text-danger">Logout</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar glass">
+                <button id="open-sidebar" class="mobile-only">&#9776;</button>
+                <div class="user-info">
+                    Halo, <span id="display-username">User</span>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <div id="dashboard" class="content-section active">
+                    <h1>Dashboard</h1>
+                    <div class="stats-grid">
+                        <div class="stat-card glass">
+                            <h3>Total Studio</h3>
+                            <p id="stat-studios">0</p>
+                        </div>
+                        <div class="stat-card glass">
+                            <h3>Booking Hari Ini</h3>
+                            <p id="stat-today">0</p>
+                        </div>
+                        <div class="stat-card glass">
+                            <h3>Jadwal Tersedia</h3>
+                            <p id="stat-available">0</p>
+                        </div>
+                        <div class="stat-card glass">
+                            <h3>Total Booking</h3>
+                            <p id="stat-total-booking">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="jadwal" class="content-section">
+                    <h1>Jadwal Studio</h1>
+                    <div class="studio-grid" id="studio-list">
+                    </div>
+                </div>
+
+                <div id="booking" class="content-section">
+                    <h1>Buat Booking Baru</h1>
+                    <div class="form-card glass">
+                        <form id="booking-form">
+                            <div class="input-group">
+                                <label for="book-studio">Pilih Studio</label>
+                                <select id="book-studio" required>
+                                    </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="book-date">Tanggal</label>
+                                <input type="date" id="book-date" required>
+                            </div>
+                            <div class="grid-2">
+                                <div class="input-group">
+                                    <label for="book-start">Jam Mulai</label>
+                                    <input type="time" id="book-start" required>
+                                </div>
+                                <div class="input-group">
+                                    <label for="book-end">Jam Selesai</label>
+                                    <input type="time" id="book-end" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-primary">Konfirmasi Booking</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="riwayat" class="content-section">
+                    <h1>Riwayat Booking</h1>
+                    <div class="controls glass">
+                        <input type="text" id="search-history" placeholder="Cari studio...">
+                        <input type="date" id="filter-date" aria-label="Filter berdasarkan tanggal" title="Filter Tanggal">
+                        <button id="clear-history" class="btn-danger">Hapus Semua Riwayat</button>
+                    </div>
+                    <div class="table-container glass">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Studio</th>
+                                    <th>Tanggal</th>
+                                    <th>Jam</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="admin" class="content-section">
+                    <div class="admin-header">
+                        <h1>Kelola Jadwal & Studio</h1>
+                        <button id="btn-add-studio" class="btn-primary">Tambah Studio</button>
+                    </div>
+                    <div class="table-container glass">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nama Studio</th>
+                                    <th>Kapasitas</th>
+                                    <th>Harga/Jam</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
+
+    <div id="admin-modal" class="modal-overlay">
+        <div class="modal-content glass">
+            <h2 id="modal-title">Tambah Studio</h2>
+            <form id="admin-form">
+                <input type="hidden" id="admin-id">
+                <div class="input-group">
+                    <label for="admin-name">Nama Studio</label>
+                    <input type="text" id="admin-name" required>
+                </div>
+                <div class="input-group">
+                    <label for="admin-equip">Peralatan (pisahkan dengan koma)</label>
+                    <textarea id="admin-equip" required></textarea>
+                </div>
+                <div class="grid-2">
+                    <div class="input-group">
+                        <label for="admin-cap">Kapasitas</label>
+                        <input type="number" id="admin-cap" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="admin-price">Harga per Jam</label>
+                        <input type="number" id="admin-price" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="admin-status">Status</label>
+                    <select id="admin-status">
+                        <option value="Tersedia">Tersedia</option>
+                        <option value="Maintenance">Maintenance</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="btn-cancel-modal" class="btn-secondary">Batal</button>
+                    <button type="submit" class="btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
